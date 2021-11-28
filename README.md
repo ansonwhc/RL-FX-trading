@@ -9,7 +9,8 @@ The main prupose is to allow the learning algorithm to learn trading the securit
 
 ## Quick Example
 This repository contains a pre-trained model that trades EUR/USD, learnt from historical data (Mar/2012 - Mar/2019). The networks are trained using Tensorflow 2.6.0 and Python 3.8.
-The trading result:
+The trading result:  
+
 ![](samples/Sample_Trained_Model_Performance.png)
 
 The simpliest way to use the trained model is by opening the [Pre_trained_Implementation](Pre_trained_Implementation.ipynb) notbook and providing a path to the daily historical EUR/USD price data of the past 55 days or more, including the current day, in a .csv format. E.g.
