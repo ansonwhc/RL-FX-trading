@@ -111,23 +111,22 @@ class ForexEnv:
         state_ = np.concatenate([self.balance, state_], axis=1)
 
         return state_, reward, self.is_done(), reward_state_, None
-
+    
+    
     def reset(self, evaluate=False):
         """
         Reset to a new episode
         """
-
-        self.iterator = iter(self.dataset)
-        self.current_pos = 0
+        
+        if not evaluate:
+            steps = np.random.randint(self.dataset_len-2)
+        else:
+            steps = 0
+        self.iterator = iter(self.dataset.skip(steps))
+        self.current_pos = steps
         self.balance = tf.convert_to_tensor([[self.initial_balance]], dtype=tf.float32)
         self.current_action = tf.zeros(shape=(1, self.n_actions), dtype=tf.float32)
-        if not evaluate:
-            steps = np.random.randint(low=1, high=self.dataset_len - 2,
-                                      size=(1,), dtype=np.int32)
-            for step in range(int(steps)):
-                observation, reward_state = self.get_state()
-        else:
-            observation, reward_state = self.get_state()
+        observation, reward_state = self.get_state()
         observation = tf.concat([self.balance, observation], axis=1)
 
         return observation, reward_state
